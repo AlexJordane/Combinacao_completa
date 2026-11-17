@@ -6,6 +6,7 @@ O documento aborda o raciocínio combinatório subjacente aos problemas de sele�
 
 ## Links de Acesso
 
+- **Página do Projeto (GitHub Pages):** https://alexjordane.github.io/Combinacao_completa/
 - **Documento em PDF:** [Combinacao_Completa.pdf](./Combinacao_Completa.pdf)
 - **Código-fonte LaTeX:** [Combinacao_Completa.tex](./Combinacao_Completa.tex)
 - **Repositório no GitHub:** https://github.com/AlexJordane/Combinacao_completa
