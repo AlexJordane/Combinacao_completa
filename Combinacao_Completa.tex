@@ -1,0 +1,413 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{parskip}
+\usepackage{setspace}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows.meta, calc, positioning, decorations.pathreplacing}
+\setstretch{1.2}
+\tcbuselibrary{skins, breakable}
+\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm}
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue]{hyperref}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\leftmark}
+\fancyfoot[C]{\thepage}
+
+% Estilo de caixa para destaque conceitual com quebra de página
+\newtcolorbox{destaque}[1][]{
+	enhanced,
+	breakable, % <-- Adicione esta linha
+	colback=gray!5,
+	colframe=black!70,
+	boxrule=1pt,
+	arc=4pt,
+	left=10pt,
+	right=10pt,
+	top=8pt,
+	bottom=8pt,
+	fonttitle=\bfseries,
+	title=#1
+}
+
+\begin{document}
+	
+	\begin{titlepage}
+		\centering
+		
+		% --- Cabeçalho da Instituição ---
+		% Mantendo a estrutura padrão; substitua o arquivo da imagem se necessário
+		\includegraphics[width=8cm]{ifes.png}\\[1cm]
+		
+		{\Large \textbf{Instituto Federal do Espírito Santo}}\\[0.5cm]
+		{\large \textbf{Pós-Graduação / Licenciatura em Matemática}}\\[0.5cm]
+		{\large Análise Combinatória e Pensamento Combinatório}
+		
+		\vspace{\fill}
+		
+		% --- Título ---
+		{\Huge \textbf{Combinações Completas}}\\[0.4cm]
+		{\LARGE \textbf{O Método das Estrelas e Barras (\textit{Stars and Bars})}}\\[0.5cm]
+		{\Large Material Teórico e Metodológico de Apoio}
+		
+		\vspace{\fill}
+		
+		% --- Autoria ---
+		{\Large Professor Alex Jordane}
+		
+		\vspace{\fill}
+		
+		% --- Local e Data ---
+		{\large Vitória -- ES}\\[0.2cm]
+		{\large 2026}
+		
+	\end{titlepage}
+	
+	\setcounter{page}{1}
+	
+	\chapter*{Apresentação}
+	\thispagestyle{empty}
+	
+	Neste material, apresentamos um estudo sobre o raciocínio combinatório subjacente aos problemas de seleção com repetição, tomando como fio condutor a clássica situação-problema da compra de sorvetes em uma sorveteria com diversos sabores.
+	
+	Discutimos a transição da contagem empírica para a modelagem matemática por meio de equações diofantinas lineares e da técnica semiótica das estrelas e barras (\textit{stars and bars}). Ao final, sistematizamos o princípio geral das combinações com repetição e suas extensões para restrições de consumo mínimo.
+	
+	Bons estudos!
+	
+	\vspace{\fill}
+	
+	{\footnotesize
+		\texttt{Material elaborado em outubro de 2026.}\\
+		\texttt{Elaborado em colaboração com a inteligência artificial Gemini.}\\
+		\texttt{O compartilhamento e a reprodução deste material são permitidos para fins didáticos, desde que citadas a fonte e a autoria.}\\
+		\texttt{Esta obra está sob uma Licença Creative Commons Atribuição-NãoComercial-SemDerivações 4.0 Internacional.}
+		\begin{center}
+			\includegraphics[width=3.5cm]{CC.png}
+		\end{center}
+	}
+	
+	\tableofcontents
+	\thispagestyle{empty}
+	
+	\vspace{1cm}
+	
+	\chapter{O Problema Disparador}
+	\label{cap:problema}
+	
+	Vamos iniciar a discussão a partir de um problema comum de análise combinatória.
+	
+	\section{O Enunciado}
+	
+	Considere a seguinte situação de contagem:
+	
+	\begin{destaque}[Problema dos Sorvetes]
+		\label{dest:prob_sorvetes}
+		De quantos modos é possível comprar 4 sorvetes de uma só bola numa sorveteria que oferece 7 sabores diferentes?
+		
+	\end{destaque}
+	
+	À primeira vista, o estudante iniciante tende a aplicar de imediato princípios aditivos ou multiplicativos, ou a confundir a situação com arranjos e combinações simples. Para superar o raciocínio empírico, precisamos analisar as duas propriedades centrais deste problema:
+	
+	\begin{enumerate}
+		\item \textbf{A ordem não importa:} Comprar $2$ sorvetes de chocolate e $2$ de baunilha resulta exatamente no mesmo conjunto de compra que escolher primeiro os $2$ de baunilha e depois os $2$ de chocolate. O que define a compra é a coleção final de itens não ordenados.
+		\item \textbf{Permite-se repetição de elementos:} O comprador pode escolher sabores repetidos (por exemplo, comprar $4$ sorvetes de morango, ou $3$ de chocolate e $1$ de pistache).
+	\end{enumerate}
+	
+	\section{A Modelagem por Equação Inteira}
+	\label{sec:equacao}
+	
+	Sejam $S_1, S_2, S_3, S_4, S_5, S_6$ e $S_7$ os sete sabores disponibilizados pela sorveteria. Seja $x_i \in \mathbb{N}_0$ a quantidade de sorvetes comprados do sabor $S_i$, com $i \in \{1, 2, \dots, 7\}$.
+	
+	A soma de todas as unidades adquiridas deve ser igual a $4$:
+	
+	\begin{destaque}[Modelo Algébrico da Compra]
+		\label{dest:eq_modelo}
+		$$x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 = 4, \quad \text{com } x_i \in \{0, 1, 2, 3, 4\}$$
+	\end{destaque}
+	
+	Resolver o problema original equivale a determinar o número de \textbf{soluções inteiras e não negativas} desta equação.
+	
+	\chapter{O Método das Estrelas e Barras (\textit{Stars and Bars})}
+	\label{cap:metodo}
+	
+	O método das estrelas e barras (\textit{stars and bars}), introduzido em tratados modernos de probabilidade por William Feller, cria uma bijeção (correspondência biunívoca) entre uma partição de objetos indistinguíveis em categorias distintas e uma sequência linear formada por dois símbolos elementares.
+	
+	\section{A Representação Semiótica}
+	
+	Imagine uma bancada onde os $7$ recipientes de sorvetes estão dispostos lado a lado. Para separar $7$ compartimentos consecutivos em linha reta, precisamos de exatamente $7 - 1 = 6$ divisórias verticais (barras):
+	$$\text{Balcão: } \underbrace{\quad}_{\text{Sabor 1}} \mid \underbrace{\quad}_{\text{Sabor 2}} \mid \underbrace{\quad}_{\text{Sabor 3}} \mid \underbrace{\quad}_{\text{Sabor 4}} \mid \underbrace{\quad}_{\text{Sabor 5}} \mid \underbrace{\quad}_{\text{Sabor 6}} \mid \underbrace{\quad}_{\text{Sabor 7}}$$
+	
+	Cada sorvete que decidimos comprar será simbolizado por uma estrela ($\bigstar$). Como o cliente deseja adquirir $4$ sorvetes no total, distribuímos $4$ estrelas ao longo desses compartimentos.
+	
+	\begin{center}
+		\begin{tikzpicture}[scale=0.9, >=latex]
+			% Caixas dos sabores
+			\foreach \x in {0,1.8,3.6,5.4,7.2,9.0,10.8} {
+				\draw[thin, gray!50] (\x, 0) rectangle (\x+1.4, 1.2);
+			}
+			% Rótulos dos sabores
+			\node at (0.7, -0.4) {$x_1$};
+			\node at (2.5, -0.4) {$x_2$};
+			\node at (4.3, -0.4) {$x_3$};
+			\node at (6.1, -0.4) {$x_4$};
+			\node at (7.9, -0.4) {$x_5$};
+			\node at (9.7, -0.4) {$x_6$};
+			\node at (11.5, -0.4) {$x_7$};
+			
+			% Bolas de exemplo: 2 no sabor 1, 1 no sabor 3, 1 no sabor 7
+			\node at (0.35, 0.6) {\Large $\bigstar$};
+			\node at (1.05, 0.6) {\Large $\bigstar$};
+			\node at (4.3, 0.6) {\Large $\bigstar$};
+			\node at (11.5, 0.6) {\Large $\bigstar$};
+			
+			% Linhas divisórias destacadas
+			\foreach \d in {1.6, 3.4, 5.2, 7.0, 8.8, 10.6} {
+				\draw[line width=2pt] (\d, -0.2) -- (\d, 1.4);
+			}
+		\end{tikzpicture}
+	\end{center}
+	
+	Removendo o desenho do balcão e retendo apenas a notação formal, o pedido acima corresponde à palavra simbólica:
+	$$\bigstar \; \bigstar \mid \mid \bigstar \mid \mid \mid \mid \bigstar$$
+	
+	\section{Exemplos de Bijeção}
+	
+	Vejamos como diferentes pedidos se traduzem em códigos de estrelas e barras:
+	
+	\begin{itemize}
+		\item \textbf{Exemplo A:} $2$ de $S_1$, $1$ de $S_3$ e $1$ de $S_7$:
+		$$\bigstar \; \bigstar \mid \mid \bigstar \mid \mid \mid \mid \bigstar$$
+		\item \textbf{Exemplo B:} Todos os $4$ sorvetes do sabor $S_4$:
+		$$\mid \mid \mid \bigstar \; \bigstar \; \bigstar \; \bigstar \mid \mid$$
+		\item \textbf{Exemplo C:} $1$ sorvete de $S_2$, $1$ de $S_3$, $1$ de $S_5$ e $1$ de $S_6$:
+		$$\mid \bigstar \mid \bigstar \mid \mid \bigstar \mid \bigstar \mid$$
+	\end{itemize}
+	
+	Todo pedido de compra corresponde a exatamente uma sequência com $4$ estrelas e $6$ barras, e toda sequência dessa forma define inequivocamente uma compra.
+	
+	\section{A Resolução Numérica}
+	
+	O problema foi reduzido à contagem de permutações de elementos repetidos em uma fila de $10$ posições:
+	$$\text{Total de posições} = 4 \text{ estrelas} + 6 \text{ barras} = 10 \text{ símbolos}$$
+	
+	Temos $10$ lacunas disponíveis para distribuir os 10 símbolos:
+	$$\underline{\hspace{0.6cm}} \quad \underline{\hspace{0.6cm}} \quad \underline{\hspace{0.6cm}} \quad \underline{\hspace{0.6cm}} \quad \underline{\hspace{0.6cm}} \quad \underline{\hspace{0.6cm}} \quad \underline{\hspace{0.6cm}} \quad \underline{\hspace{0.6cm}} \quad \underline{\hspace{0.6cm}} \quad \underline{\hspace{0.6cm}}$$
+	
+	Para montar a sequência, basta escolher quais das $10$ posições serão preenchidas pelas $4$ estrelas (as $6$ posições restantes serão, compulsoriamente, preenchidas pelas barras):
+	 
+	\begin{destaque}[Cálculo por Princípio Fundamental da Contagem]
+		\label{dest:calculo_PFC}
+		Vamos distribuir 4 estrelas e temos 10 lacunas:
+			
+		A primeira estrela pode ser colocada em qualquer uma das 10 lacunas. Vamos colocá-la, por exemplo, na segunda lacuna:
+		\vspace{0.5cm}
+		
+\begin{center}
+			\begin{tabular}{|rccccccc|}
+			\hline
+			Lacuna escolhida & 2 & &  &  & & & \\
+			& $\bigstar$ & & $\bigstar$ & & $\bigstar$ & & $\bigstar$ \\
+			Possibilidades & 10 &  &  &  &  & &  \\
+			\hline
+		\end{tabular}
+\end{center}		
+
+		\vspace{0.5cm}
+
+		A segunda estrela pode ser colocada em qualquer uma das 9 lacunas restantes. Vamos colocá-la na quinta lacuna:
+		\vspace{0.5cm}
+				
+\begin{center}
+	\begin{tabular}{|rccccccc|}
+		\hline
+		Lacuna escolhida & 2 & & 5 &  & & & \\
+		& $\bigstar$ & & $\bigstar$ & & $\bigstar$ & & $\bigstar$ \\
+		Possibilidades & 10 & $\cdot$ & 9 &  &  & &  \\
+		\hline
+	\end{tabular}
+\end{center}		
+
+\vspace{0.5cm}
+
+E assim sucessivamente até distribuirmos as 4 estrelas:
+
+		\vspace{0.5cm}
+
+\begin{center}
+	\begin{tabular}{|rccccccc|}
+		\hline
+		Lacuna escolhida & 2 & & 5 &  & 7 & & 10 \\
+		& $\bigstar$ & & $\bigstar$ & & $\bigstar$ & & $\bigstar$ \\
+		Possibilidades & 10 & $\cdot$ & 9 & $\cdot$ & 8 & $\cdot$ & 7 \\
+		\hline
+	\end{tabular}
+\end{center}		
+
+\vspace{0.5cm}
+		
+		Nessa distribuição as estrelas ficariam distribuídas da seguinte forma:
+		
+		$$\underline{\hspace{0.6cm}} \quad 
+		\overset{\scalebox{1}{$\bigstar$}}{\underline{\hspace{0.6cm}}} \quad 
+		\underline{\hspace{0.6cm}} \quad 
+		\underline{\hspace{0.6cm}} \quad 
+		\overset{\scalebox{1}{$\bigstar$}}{\underline{\hspace{0.6cm}}} \quad 
+		\underline{\hspace{0.6cm}} \quad 
+		\overset{\scalebox{1}{$\bigstar$}}{\underline{\hspace{0.6cm}}} \quad 
+		\underline{\hspace{0.6cm}} \quad 
+		\underline{\hspace{0.6cm}} \quad 
+		\overset{\scalebox{1}{$\bigstar$}}{\underline{\hspace{0.6cm}}}$$
+		
+		
+		Olhando para as lacunas escolhidas (2, 5, 7 e 10), podemos observar que a ordem dessa escolha não interfere na situação final, ou seja, escolher 2, 5, 7 e 10 é o mesmo que escolher 2, 5, 10 e 7, ou 5, 2, 7 e 10. Isso significa que estamos contando as possibilidades mais de uma vez. Para isso vamos calcular as possibilidades de permutação das lacunas, depois de escolhidas:
+		
+		$$ \text{Permutações das lacunas escolhidas} = 4 \cdot 3 \cdot 2 \cdot 1$$
+		
+		Finalmente chegamos ao cálculo das possibilidades de distribuirmos 4 estrelas em 10 lacunas:
+		
+		$$\frac{10 \cdot 9 \cdot 8 \cdot 7}{4 \cdot 3 \cdot 2 \cdot 1} = 210$$
+		
+		Agora que distribuímos as estrelas, as barras ocupam as lacunas que restaram, logo, só há uma forma de distribuir as barras:
+		
+		$$\overset{\scalebox{1}{$\mid$}}{\underline{\hspace{0.6cm}}} \quad 
+		\overset{\scalebox{1}{$\bigstar$}}{\underline{\hspace{0.6cm}}} \quad 
+		\overset{\scalebox{1}{$\mid$}}{\underline{\hspace{0.6cm}}} \quad 
+		\overset{\scalebox{1}{$\mid$}}{\underline{\hspace{0.6cm}}} \quad 
+		\overset{\scalebox{1}{$\bigstar$}}{\underline{\hspace{0.6cm}}} \quad 
+		\overset{\scalebox{1}{$\mid$}}{\underline{\hspace{0.6cm}}} \quad 
+		\overset{\scalebox{1}{$\bigstar$}}{\underline{\hspace{0.6cm}}} \quad 
+		\overset{\scalebox{1}{$\mid$}}{\underline{\hspace{0.6cm}}} \quad 
+		\overset{\scalebox{1}{$\mid$}}{\underline{\hspace{0.6cm}}} \quad 
+		\overset{\scalebox{1}{$\bigstar$}}{\underline{\hspace{0.6cm}}}$$
+		
+		$$ \mid \bigstar \mid \mid \bigstar \mid \bigstar \mid \mid \bigstar$$
+		
+		Ou seja, não escolhemos nenhum sorvete $S_1$, um ($\bigstar$) $S_2$, nenhum $S_3$, um $S_4$, um $S_5$, nenhum $S_6$ e um $S_7$.
+		
+	\end{destaque}
+	
+	\newpage
+	
+	\begin{destaque}[Cálculo por Combinação Simples]
+		\label{dest:calculo_combinacao}
+		Se observarmos o que fizemos pelo Princípio Fundamental da Contagem, notamos que é uma combinação de 10 elementos, tomados 4 a 4:
+		
+		$$\binom{10}{4} = \frac{10!}{4!(10-4)!} = \frac{10!}{4!6!} = \frac{10 \cdot 9 \cdot 8 \cdot 7 \cdot 6!}{4 \cdot 3 \cdot 2 \cdot 1 \cdot 6!} = \frac{10 \cdot 9 \cdot 8 \cdot 7}{4 \cdot 3 \cdot 2 \cdot 1} = 210$$
+	\end{destaque}
+	
+	De modo equivalente, podemos interpretar o problema como uma permutação de $10$ elementos com repetição de $4$ estrelas e $6$ barras:
+	\begin{destaque}[Cálculo por Permutação com Repetição]
+		$$P_{10}^{4, 6} = \frac{10!}{4! \, 6!} = 210$$
+	\end{destaque}
+	
+	Portanto, existem \textbf{210 modos diferentes} de se realizar a compra.
+	
+	\chapter{A Formalização Teórica Geral}
+	\label{cap:formalizacao}
+	
+	\section{Definição de Combinação Completa}
+	
+	Desejamos selecionar $k$ objetos a partir de um conjunto com $n$ tipos distintos disponíveis, com repetição irrestrita e sem importar a ordem. Denotamos este número por $CR_n^k$ ou $\left(\!\binom{n}{k}\!\right)$.
+	
+	\begin{destaque}[Teorema Fundamental das Combinações com Repetição]
+		\label{dest:teorema_geral}
+		O número de modos de escolher $k$ elementos dentre $n$ tipos distintos com repetição é equivalente ao número de soluções inteiras não negativas da equação
+		$$x_1 + x_2 + \cdots + x_n = k, \quad x_i \geqslant 0$$
+		e é dado formalmente por:
+		$$CR_n^k = \binom{n + k - 1}{k} = \binom{n + k - 1}{n - 1}$$
+	\end{destaque}
+	
+	\textbf{Demonstração:} 
+	Cada solução da equação $x_1 + x_2 + \cdots + x_n = k$ é representada por uma cadeia contendo:
+	\begin{itemize}
+		\item $k$ marcas idênticas (as estrelas $\bigstar$, representando as unidades somadas);
+		\item $n - 1$ divisórias idênticas (as barras $\mid$, que separam as $n$ variáveis).
+	\end{itemize}
+	O comprimento total da cadeia simbólica é $k + (n - 1) = n + k - 1$. A escolha dos lugares das $k$ estrelas define unicamente a sequência. Logo, há $\binom{n+k-1}{k}$ soluções possíveis. $\hfill \blacksquare$
+	
+	\section{Variação com Restrição: Soluções Estritamente Positivas}
+	
+	E se o enunciado impusesse a exigência de que o cliente devesse comprar \textbf{pelo menos um} sorvete de cada sabor? 
+	
+	Essa situação clássica corresponde a encontrar as soluções inteiras estritamente positivas:
+	$$x_1 + x_2 + \dots + x_n = k, \quad \text{com } x_i \geqslant 1$$
+	
+	Observe que, para haver ao menos uma solução, devemos ter $k \geqslant n$. Essa situação não se aplica ao nosso problema inicial, visto que temos 7 sabores e vamos escolher somente 4 sorvetes. Uma possível adaptação a essa situação seria se tivéssemos 7 sabores e fôssemos escolher, por exemplo, 10 sorvetes, sendo pelo menos um sorvete de cada sabor.
+	
+	\subsection{Resolução Geométrica pelos Espaços entre Estrelas}
+	Alinham-se primeiro as $k$ estrelas:
+	$$\bigstar \quad \sqcup \quad \bigstar \quad \sqcup \quad \bigstar \quad \dots \quad \bigstar \quad \sqcup \quad \bigstar$$
+	Entre $k$ estrelas consecutivas existem exatamente $k - 1$ espaços internos disponíveis ($\sqcup$). Para garantir que nenhum sabor fique com zero unidades, nenhum traço pode ficar junto a outro e nenhum traço pode ficar nas extremidades. Devemos então escolher $n - 1$ desses $k - 1$ espaços para alojar as barras:
+	
+	\begin{destaque}[Soluções Estritamente Positivas]
+		\label{dest:solucoes_positivas}
+		O número de soluções inteiras com $x_i \geqslant 1$ para $x_1 + \dots + x_n = k$ é dado por:
+		$$\binom{k - 1}{n - 1}$$
+	\end{destaque}
+	
+	\subsection{Resolução por Mudança de Variável}
+	Podemos chegar ao mesmo resultado definindo $y_i = x_i - 1$. Como $x_i \geqslant 1$, segue que $y_i \geqslant 0$.
+	Substituindo na equação original:
+	$$(y_1 + 1) + (y_2 + 1) + \cdots + (y_n + 1) = k$$
+	$$y_1 + y_2 + \cdots + y_n = k - n$$
+	Pelo teorema fundamental (com $k' = k - n$):
+	$$\binom{n + (k - n) - 1}{k - n} = \binom{k - 1}{k - n} = \binom{k - 1}{n - 1}$$
+	
+	\chapter{Quadro de Sistematização Geral}
+	\label{cap:sistematizacao}
+	
+	Sintetizamos as estruturas operatórias estudadas no quadro abaixo para consulta rápida:
+	
+	\begin{destaque}[Resumo Operacional: Estrelas e Barras]
+		\begin{itemize}
+			\item \textbf{Problema base:} Distribuir $k$ objetos indistinguíveis entre $n$ recipientes distinguíveis ($x_1 + \dots + x_n = k$).
+			\item \textbf{Número de estrelas:} $k$
+			\item \textbf{Número de barras:} $n - 1$
+			\item \textbf{Total de posições na permutação linear:} $n + k - 1$
+			\item \textbf{Fórmula para soluções não negativas ($x_i \geqslant 0$):}
+			$$CR_n^k = \binom{n + k - 1}{k}$$
+			\item \textbf{Fórmula para soluções estritamente positivas ($x_i \geqslant 1$):}
+			$$\binom{k - 1}{n - 1}$$
+			\item \textbf{No Problema dos Sorvetes ($k=4$ sorvetes, $n=7$ sabores):}
+			$$CR_7^4 = \binom{7 + 4 - 1}{4} = \binom{10}{4} = 210$$
+		\end{itemize}
+	\end{destaque}
+	
+	\chapter{Sugestão de Problemas Correlatos}
+	
+	Para consolidar e expandir os conceitos desenvolvidos ao longo deste material, propomos a seguir três problemas que mobilizam o método de estrelas e barras sob diferentes condições. As situações apresentadas exploram desde restrições mínimas homogêneas e assimétricas até limitações de valor superior, evidenciando como a mudança de variáveis e a articulação com outros princípios de contagem tornam esse modelo uma ferramenta abrangente na resolução de equações diofantinas. 
+	
+	\section*{Problema 1: Soluções Estritamente Positivas}
+	\begin{destaque}[Equação com Variáveis Positivas]
+		Determine o número de soluções inteiras e estritamente positivas da equação:
+		$$x_1 + x_2 + x_3 + x_4 = 12, \quad \text{com } x_i \ge 1 \text{ para todo } i \in \{1, 2, 3, 4\}$$
+	\end{destaque}
+	
+	\textit{Resposta: 165 soluções.}
+	
+	\section*{Problema 2: Limites Inferiores Assimétricos}
+	\begin{destaque}[Distribuição com Cotas Mínimas Diferenciadas]
+		Um comitê acadêmico dispõe de 20 bolsas de pesquisa idênticas para distribuir entre 4 departamentos: Matemática ($x_1$), Física ($x_2$), Química ($x_3$) e Biologia ($x_4$). Sabendo que as demandas mínimas são $x_1 \ge 3$, $x_2 \ge 2$, $x_3 \ge 4$ e $x_4 \ge 1$, de quantas maneiras distintas as 20 bolsas podem ser alocadas?
+	\end{destaque}
+	
+	\textit{Resposta: 286 maneiras distintas.}
+	
+	\section*{Problema 3: Restrição Superior e Inclusão-Exclusão}
+	\begin{destaque}[Equação com Teto Superior]
+		Quantas são as soluções inteiras da equação:
+		$$x_1 + x_2 + x_3 = 11$$
+		sujeitas à condição $0 \le x_i \le 6$ para cada $i \in \{1, 2, 3\}$?
+	\end{destaque}
+	
+	\textit{Resposta: 33 soluções.}
+	
+\end{document}
