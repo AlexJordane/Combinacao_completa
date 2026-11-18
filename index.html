@@ -41,7 +41,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 24px;
+      gap: 28px;
       margin-bottom: 20px;
       flex-wrap: wrap;
     }
@@ -49,6 +49,10 @@
     .header-logos img {
       max-height: 64px;
       width: auto;
+    }
+
+    .header-logos img.logo-destaque {
+      max-height: 96px;
     }
 
     .instituicao {
@@ -59,6 +63,36 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       margin-bottom: 8px;
+    }
+
+    .instituicao p {
+      margin: 2px 0;
+    }
+
+    .cursos {
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #4a5568;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .cursos p {
+      margin: 2px 0;
+    }
+
+    .professor {
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #4a5568;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .professor p {
+      margin: 2px 0;
     }
 
     h1 {
@@ -198,6 +232,7 @@
       .container {
         padding: 24px 18px;
       }
+
       .btn {
         width: 100%;
         justify-content: center;
@@ -210,12 +245,21 @@
 
   <div class="container">
     <div class="header-logos">
-      <img src="ifes.png" alt="Instituto Federal do Espírito Santo">
-      <img src="Educimat.png" alt="Educimat">
+      <img src="https://alexjordane.github.io/Limat.jpeg" alt="Limat" class="logo-destaque">
+      <img src="https://alexjordane.github.io/ifes.png" alt="Instituto Federal do Espírito Santo">
+      <img src="https://alexjordane.github.io/Educimat.png" alt="Educimat" class="logo-destaque">
     </div>
 
     <div class="instituicao">
-      Instituto Federal do Espírito Santo &bull; Pós-Graduação / Licenciatura em Matemática
+      <p>Instituto Federal do Espírito Santo</p>
+    </div>
+
+    <div class="cursos">
+      <p>Licenciatura em Matemática &bull; Educimat</p>
+    </div>
+
+    <div class="professor">
+      <p>Professor Alex Jordane</p>
     </div>
 
     <h1>Combinações Completas: O Método das Estrelas e Barras (<em>Stars and Bars</em>)</h1>
@@ -228,17 +272,23 @@
       <a href="Combinacao_Completa.tex" class="btn btn-secondary" download>
         📝 Baixar Código LaTeX (.tex)
       </a>
-      <a href="https://github.com/AlexJordane/Combinacao_completa" class="btn btn-secondary" target="_blank" rel="noopener">
+      <a href="https://github.com/AlexJordane/Combinacao_completa" class="btn btn-secondary" target="_blank"
+        rel="noopener">
         🔗 Repositório no GitHub
       </a>
     </div>
 
     <div class="intro-box">
       <p>
-        Este material apresenta um estudo sobre o raciocínio combinatório subjacente aos problemas de <strong>seleção com repetição (combinações completas)</strong>, tomando como fio condutor a clássica situação-problema da compra de sorvetes em uma sorveteria com diversos sabores.
+        Este material apresenta um estudo sobre o raciocínio combinatório subjacente aos problemas de <strong>seleção
+          com repetição (combinações completas)</strong>, tomando como fio condutor a clássica situação-problema da
+        compra de sorvetes em uma sorveteria com diversos sabores.
       </p>
       <p>
-        O texto discute a transição da contagem empírica para a modelagem matemática por meio de <strong>equações diofantinas lineares</strong> e da técnica semiótica das <strong>estrelas e barras (<em>stars and bars</em>)</strong>, sistematizando o princípio geral e suas extensões para restrições de consumo mínimo e máximo.
+        O texto discute a transição da contagem empírica para a modelagem matemática por meio de <strong>equações
+          diofantinas lineares</strong> e da técnica semiótica das <strong>estrelas e barras (<em>stars and
+            bars</em>)</strong>, sistematizando o princípio geral e suas extensões para restrições de consumo mínimo e
+        máximo.
       </p>
     </div>
 
@@ -248,7 +298,9 @@
       <div class="chapter-card">
         <h3>Capítulo 1 — O Problema Disparador</h3>
         <p>
-          Parte do clássico <em>Problema dos Sorvetes</em> ("De quantos modos é possível comprar 4 sorvetes de uma só bola numa sorveteria que oferece 7 sabores diferentes?"), analisando a não ordenação e a possibilidade de repetição, e modela o problema por meio da equação inteira não negativa:
+          Parte do clássico <em>Problema dos Sorvetes</em> ("De quantos modos é possível comprar 4 sorvetes de uma só
+          bola numa sorveteria que oferece 7 sabores diferentes?"), analisando a não ordenação e a possibilidade de
+          repetição, e modela o problema por meio da equação inteira não negativa:
         </p>
         <div class="formula-destaque">
           $$x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 = 4, \quad x_i \in \{0, 1, 2, 3, 4\}$$
@@ -258,31 +310,41 @@
       <div class="chapter-card">
         <h3>Capítulo 2 — O Método das Estrelas e Barras (<em>Stars and Bars</em>)</h3>
         <p>
-          Apresenta a representação semiótica e visual que estabelece uma bijeção entre partições de objetos indistinguíveis em categorias distintas e sequências lineares formadas por estrelas ($\bigstar$) e barras ($\mid$). Desenvolve a resolução numérica pelo <strong>Princípio Fundamental da Contagem</strong>, por <strong>Combinação Simples</strong> e por <strong>Permutação com Repetição</strong>.
+          Apresenta a representação semiótica e visual que estabelece uma bijeção entre partições de objetos
+          indistinguíveis em categorias distintas e sequências lineares formadas por estrelas ($\bigstar$) e barras
+          ($\mid$). Desenvolve a resolução numérica pelo <strong>Princípio Fundamental da Contagem</strong>, por
+          <strong>Combinação Simples</strong> e por <strong>Permutação com Repetição</strong>.
         </p>
       </div>
 
       <div class="chapter-card">
         <h3>Capítulo 3 — A Formalização Teórica Geral</h3>
         <p>
-          Demonstra o <strong>Teorema Fundamental das Combinações com Repetição</strong> para soluções inteiras não negativas ($x_i \geqslant 0$) e deduz a fórmula para <strong>soluções estritamente positivas</strong> ($x_i \geqslant 1$) tanto geometricamente (pelos espaços entre estrelas) quanto algebricamente (por mudança de variável):
+          Demonstra o <strong>Teorema Fundamental das Combinações com Repetição</strong> para soluções inteiras não
+          negativas ($x_i \geqslant 0$) e deduz a fórmula para <strong>soluções estritamente positivas</strong> ($x_i
+          \geqslant 1$) tanto geometricamente (pelos espaços entre estrelas) quanto algebricamente (por mudança de
+          variável):
         </p>
         <div class="formula-destaque">
-          $$CR_n^k = \binom{n + k - 1}{k} = \binom{n + k - 1}{n - 1} \qquad \text{e} \qquad \binom{k - 1}{n - 1} \text{ para } x_i \geqslant 1$$
+          $$CR_n^k = \binom{n + k - 1}{k} = \binom{n + k - 1}{n - 1} \qquad \text{e} \qquad \binom{k - 1}{n - 1} \text{
+          para } x_i \geqslant 1$$
         </div>
       </div>
 
       <div class="chapter-card">
         <h3>Capítulo 4 — Quadro de Sistematização Geral</h3>
         <p>
-          Reúne em um quadro de consulta rápida os parâmetros operacionais do modelo (número de estrelas $k$, número de barras $n-1$, total de posições $n+k-1$ e fórmulas principais).
+          Reúne em um quadro de consulta rápida os parâmetros operacionais do modelo (número de estrelas $k$, número de
+          barras $n-1$, total de posições $n+k-1$ e fórmulas principais).
         </p>
       </div>
 
       <div class="chapter-card">
         <h3>Capítulo 5 — Sugestão de Problemas Correlatos</h3>
         <p>
-          Propõe problemas com gabarito que ampliam o método para casos de variáveis estritamente positivas, limites inferiores assimétricos (cotas mínimas diferenciadas) e restrição de teto superior combinada ao Princípio da Inclusão-Exclusão.
+          Propõe problemas com gabarito que ampliam o método para casos de variáveis estritamente positivas, limites
+          inferiores assimétricos (cotas mínimas diferenciadas) e restrição de teto superior combinada ao Princípio da
+          Inclusão-Exclusão.
         </p>
       </div>
     </div>
@@ -290,9 +352,12 @@
     <footer class="footer">
       <p>
         <strong>Autoria:</strong> Professor Alex Jordane, em colaboração com Inteligência Artificial (Gemini).<br>
-        Esta obra está licenciada sob uma Licença <strong>Creative Commons Atribuição-NãoComercial-SemDerivações 4.0 Internacional (CC BY-NC-ND 4.0)</strong>.
+        Esta obra está licenciada sob uma Licença <strong>Creative Commons Atribuição-NãoComercial-SemDerivações 4.0
+          Internacional (CC BY-NC-ND 4.0)</strong>.
       </p>
-      <img src="CC.png" alt="Licença Creative Commons CC BY-NC-ND 4.0">
+      <p> O compartilhamento e a reprodução deste material são permitidos para fins didáticos, desde que citadas a fonte
+        e a autoria.</p>
+      <img src="https://alexjordane.github.io/CC.png" alt="Licença Creative Commons CC BY-NC-ND 4.0">
     </footer>
   </div>
 
